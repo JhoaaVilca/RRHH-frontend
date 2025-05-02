@@ -1,34 +1,33 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';  // Para los iconos
+import { FaEdit, FaTrashAlt } from 'react-icons/fa'; 
 
-export default function ListadoEmpleados() {
-    const urlBackend = "http://localhost:8080/rrhh-app/empleados";
-    const [empleados, setEmpleados] = useState([]);
+export default function ListadoClientes() {
+    const urlBackend = "http://localhost:8080/rrhh-app/cliente";
+    const [clientes, setClientes] = useState([]);
 
     useEffect(() => {
-        cargarEmpleados();
+        cargarClientes();
     }, []);
 
-    const cargarEmpleados = async () => {
+    const cargarClientes = async () => {
         const resultado = await axios.get(urlBackend);
-        setEmpleados(resultado.data);
+        setClientes(resultado.data);
     };
 
-    const eliminarEmpleado = async (id) => {
-        if (window.confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
+    const eliminarClientes = async (id) => {
+        if (window.confirm("¿Estás seguro de que deseas eliminar este cliente?")) {
             await axios.delete(`${urlBackend}/${id}`);
-            cargarEmpleados();
+            cargarClientes();
         }
     };
 
     return (
         <div className="container mt-5">
-            {/* Título */}
             <div className="text-center mb-4">
                 <h2 className="fw-bold text-primary">Sistema de Recursos Humanos</h2>
-                <p className="text-muted">Listado de empleados</p>
+                <p className="text-muted">Listado de Clientes</p>
             </div>
 
             {/* Tabla con diseño moderno */}
@@ -39,42 +38,35 @@ export default function ListadoEmpleados() {
                             <th>Id</th>
                             <th>Apellidos</th>
                             <th>Nombres</th>
-                            <th>Área</th>
                             <th>Dirección</th>
                             <th>Email</th>
-                            <th>Sueldo</th>
                             <th>Teléfono</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            empleados.map((empleado, indice) => (
+                            clientes.map((cliente, indice) => (
                                 <tr key={indice} className="border-bottom">
-                                    <td>{empleado.idEmpleados}</td>
-                                    <td>{empleado.apellido}</td>
-                                    <td>{empleado.nombre}</td>
-                                    <td>{empleado.area}</td>
-                                    <td>{empleado.direccion}</td>
-                                    <td>{empleado.email}</td>
-                                    <td>{empleado.sueldo}</td>
-                                    <td>{empleado.telefono}</td>
+                                    <td>{cliente.idCliente}</td>
+                                    <td>{cliente.apellido}</td>
+                                    <td>{cliente.nombre}</td>
+                                    <td>{cliente.direccion}</td>
+                                    <td>{cliente.email}</td>
+                                    <td>{cliente.telefono}</td>
                                     <td className="text-center">
-                                        {/* Botones de Acciones */}
                                         <div className="d-flex justify-content-center">
-                                            {/* Botón de Editar */}
+
                                             <Link
-                                                to={`/editar/${empleado.idEmpleados}`}
+                                                to={`/editarclientes/${cliente.idCliente}`}
                                                 className="btn btn-outline-primary btn-sm me-2 shadow-sm rounded-pill px-3 py-1"
                                                 title="Editar"
                                             >
                                                 <FaEdit className="me-2" />
                                                 Editar
                                             </Link>
-
-                                            {/* Botón de Eliminar */}
                                             <button
-                                                onClick={() => eliminarEmpleado(empleado.idEmpleados)}
+                                                onClick={() => eliminarClientes(cliente.idCliente)}
                                                 className="btn btn-outline-danger btn-sm shadow-sm rounded-pill px-3 py-1"
                                                 title="Eliminar"
                                             >
